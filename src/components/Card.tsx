@@ -2,18 +2,20 @@ import { PropsWithChildren } from "react";
 
 type Props = {
   className?: string;
+  onClick?: () => void;
 };
 
-function Card(props: PropsWithChildren<Props>) {
+const Card = (props: PropsWithChildren<Props>) => {
   return (
     <div
-      className={`p-2 m-2 shadow-lg border rounded-lg ${
+      className={`p-4 m-4 shadow-lg border rounded-lg ${
         props.className ? props.className : ""
       }`}
+      onClick={props.onClick}
     >
       {props.children}
     </div>
   );
-}
+};
 
 export default Card;
