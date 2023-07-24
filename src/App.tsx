@@ -1,21 +1,25 @@
 import { useQuery } from "react-query";
 import axios from "axios";
 import "./App.css";
+import Card from "./components/Card";
 
-type Note = {
+type Client = {
   id: number;
-  title: string;
-  text: string;
+  firstName: string;
+  lastName: string;
 };
 
 const fetchData = async () => {
-  const res = await axios.get("http://localhost:5103/api/notes");
-  const data: Note[] = res.data.data;
+  const res = await axios.get("http://localhost:5103/api/clients");
+  const data: Client[] = res.data.data;
   return data;
 };
 
 function App() {
-  const { isLoading, error, data } = useQuery<Note[], Error>("data", fetchData);
+  const { isLoading, error, data } = useQuery<Client[], Error>(
+    "data",
+    fetchData
+  );
 
   if (isLoading)
     return (
@@ -38,15 +42,10 @@ function App() {
   return (
     <>
       <div>
-        <h1>NOTES</h1>
+        <h1>CLIENTS</h1>
         {data &&
-          data.map((note) => {
-            return (
-              <div>
-                <h3>{note.title}</h3>
-                <p>{note.text}</p>
-              </div>
-            );
+          data.map((client) => {
+            return <Card>{`${client.firstName} ${client.lastName}`}</Card>;
           })}
       </div>
     </>
