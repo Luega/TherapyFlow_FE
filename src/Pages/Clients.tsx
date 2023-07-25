@@ -1,13 +1,8 @@
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Card from "../components/Card";
-
-type Client = {
-  id: number;
-  firstName: string;
-  lastName: string;
-};
+import { Client } from "../utils/types";
 
 const fetchData = async () => {
   const res = await axios.get("http://localhost:5103/api/clients");
@@ -21,6 +16,9 @@ const Clients = () => {
     "data",
     fetchData
   );
+
+  const navigate = useNavigate();
+  console.log(data);
 
   if (isLoading)
     return (
@@ -46,7 +44,12 @@ const Clients = () => {
         <h1>CLIENTS:</h1>
         {data &&
           data.map((client) => {
-            return <Card>{`${client.firstName} ${client.lastName}`}</Card>;
+            return (
+              <Card
+                key={client.id}
+                onClick={() => navigate(`/clients/${client.id}`)}
+              >{`${client.firstName} ${client.lastName}`}</Card>
+            );
           })}
       </div>
       <Link to="/">Home</Link>

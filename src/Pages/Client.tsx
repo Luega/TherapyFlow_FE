@@ -2,12 +2,7 @@ import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Card from "../components/Card";
-
-type Client = {
-  id: number;
-  firstName: string;
-  lastName: string;
-};
+import { Client } from "../utils/types";
 
 const fetchData = async () => {
   const pathname = window.location.pathname;
@@ -20,7 +15,6 @@ const fetchData = async () => {
 
 const Client = () => {
   const { isLoading, error, data } = useQuery<Client, Error>("data", fetchData);
-  console.log(data);
 
   if (isLoading)
     return (
@@ -43,11 +37,16 @@ const Client = () => {
   return (
     <>
       <div>
-        <h1>CLIENTS:</h1>
-        {data && <Card>{`${data.firstName} ${data.lastName}`}</Card>}
+        <h1>Client info:</h1>
+        {data && (
+          <Card>
+            <h3>{`First name: ${data.firstName}`}</h3>
+            <h3>{`Last name: ${data.lastName}`}</h3>
+          </Card>
+        )}
         {!data && <Card>No Client</Card>}
       </div>
-      <Link to="/">Home</Link>
+      <Link to="/clients">Clients</Link>
     </>
   );
 };
