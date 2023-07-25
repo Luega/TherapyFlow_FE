@@ -10,17 +10,17 @@ type Client = {
 };
 
 const fetchData = async () => {
-  const res = await axios.get("http://localhost:5103/api/clients");
+  const pathname = window.location.pathname;
+  const segment = pathname.substring(pathname.lastIndexOf("/") + 1);
+  const res = await axios.get(`http://localhost:5103/api/clients/${segment}`);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-  const data: Client[] = res.data.data;
+  const data: Client = res.data.data;
   return data;
 };
 
-const Clients = () => {
-  const { isLoading, error, data } = useQuery<Client[], Error>(
-    "data",
-    fetchData
-  );
+const Client = () => {
+  const { isLoading, error, data } = useQuery<Client, Error>("data", fetchData);
+  console.log(data);
 
   if (isLoading)
     return (
@@ -44,14 +44,12 @@ const Clients = () => {
     <>
       <div>
         <h1>CLIENTS:</h1>
-        {data &&
-          data.map((client) => {
-            return <Card>{`${client.firstName} ${client.lastName}`}</Card>;
-          })}
+        {data && <Card>{`${data.firstName} ${data.lastName}`}</Card>}
+        {!data && <Card>No Client</Card>}
       </div>
       <Link to="/">Home</Link>
     </>
   );
 };
 
-export default Clients;
+export default Client;
