@@ -3,3 +3,8 @@ export interface IClient {
   firstName: string;
   lastName: string;
 }
+export interface INote {
+  id: number;
+  title: string;
+  text: string;
+}

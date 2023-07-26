@@ -16,6 +16,7 @@ const Clients = () => {
           clients.map((client) => {
             return (
               <Card
+                className="cursor-pointer"
                 key={client.id}
                 onClick={() => navigate(`/clients/${client.id}`)}
               >{`${client.firstName} ${client.lastName}`}</Card>
