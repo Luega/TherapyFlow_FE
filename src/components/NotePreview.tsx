@@ -4,7 +4,7 @@ interface Props {
   note: INote;
 }
 
-const Note = ({ note }: Props) => {
+const NotePreview = ({ note }: Props) => {
   return (
     <div>
       <h3>{note.title}</h3>
@@ -13,4 +13,4 @@ const Note = ({ note }: Props) => {
   );
 };
 
-export default Note;
+export default NotePreview;

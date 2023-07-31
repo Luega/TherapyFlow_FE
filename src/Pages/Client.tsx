@@ -4,18 +4,17 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { useContext } from "react";
 import ClientsContext from "../contexts/ClientContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Card from "../components/Card";
-import Note from "../components/Note";
+import NotePreview from "../components/NotePreview";
 
 const Client = () => {
   const { clients } = useContext(ClientsContext);
+  const navigate = useNavigate();
 
   const pathname = window.location.pathname;
   const segment = pathname.substring(pathname.lastIndexOf("/") + 1);
-  const client = clients.filter(
-    (client) => client.id.toString() === segment
-  )[0];
+  const client = clients.filter((client) => client.id === segment)[0];
 
   return (
     <>
@@ -30,8 +29,12 @@ const Client = () => {
             <h1>Treatment notes:</h1>
             {client.notes.map((note) => {
               return (
-                <Card key={note.id}>
-                  <Note note={note} />
+                <Card
+                  key={note.id}
+                  className="cursor-pointer"
+                  onClick={() => navigate(`/clients/${client.id}/${note.id}`)}
+                >
+                  <NotePreview note={note} />
                 </Card>
               );
             })}

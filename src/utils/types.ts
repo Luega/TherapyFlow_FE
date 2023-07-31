@@ -1,11 +1,11 @@
 export interface IClient {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   notes: INote[];
 }
 export interface INote {
-  id: number;
+  id: string;
   title: string;
   text: string;
   clientId: string;
