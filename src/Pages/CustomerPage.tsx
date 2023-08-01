@@ -35,7 +35,9 @@ const CustomerPage = () => {
                 <Card
                   key={note.id}
                   className="cursor-pointer"
-                  onClick={() => navigate(`/clients/${customer.id}/${note.id}`)}
+                  onClick={() =>
+                    navigate(`/customers/${customer.id}/${note.id}`)
+                  }
                 >
                   <NotePreview note={note} />
                 </Card>
